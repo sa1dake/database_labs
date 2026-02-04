@@ -41,7 +41,7 @@
 Графік може містити кілька інтервалів відключення
 
 ## ER діаграма
-![alt text](ER-Diagram.png)
+<img src="ER-Diagram.png" alt="ER-діаграма" style="background-color: white; border: 1px solid #ddd; border-radius: 6px; padding: 10px;">
 
 ## Сутності та їх атрибути
 
