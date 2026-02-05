@@ -74,30 +74,30 @@ WHERE valid_to < '2026-01-01';
 -- Отримання списку всіх регіонів
 SELECT * FROM region;
 ```
-![Alt text](images\regions.png)
+![Alt text](images/regions.png)
 
 ```sql
 -- Отримання всіх районів Київської області
 SELECT * FROM district
 WHERE region_id = 2;
 ```
-![Alt text](images\district.png)
+![Alt text](images/district.png)
 
 ```sql
 -- Перегляд усіх адрес
 SELECT * FROM address;
 ```
-![Alt text](images\adresses.png)
+![Alt text](images/adresses.png)
 
 ```sql
 -- Перегляд усіх груп відключень
 SELECT * FROM power_group;
 ```
-![Alt text](images\power.png)
+![Alt text](images/power.png)
 
 ```sql
 -- Перегляд активних графіків відключень
 SELECT * FROM schedule
 WHERE valid_to >= CURRENT_DATE;
 ```
-![Alt text](images\schedule.png)
+![Alt text](images/schedule.png)
