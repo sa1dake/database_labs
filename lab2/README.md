@@ -26,15 +26,15 @@
 
 ## Реляційна схема бази даних
 
-Region(`region_id`, name, type)
-District(`district_id`, `region_id`, name)
-Address(`address_id`, `district_id`, street, building_number)
-PowerGroup(`group_id`, `district_id`, code)
-Schedule(`schedule_id`, `group_id`, valid_from, valid_to)
-TimeSlot(`timeslot_id`, `schedule_id`, day_of_week, start_time, end_time)
-Consumer(`consumer_id`, `address_id`, `group_id`, consumer_type)
-OutageEvent(`event_id`, `group_id`, start_datetime, end_datetime, reason)
-Notification(`notification_id`, `event_id`, message, created_at)
+- Region(`region_id`, name, type)
+- District(`district_id`, `region_id`, name)
+- Address(`address_id`, `district_id`, street, building_number)
+- PowerGroup(`group_id`, `district_id`, code)
+- Schedule(`schedule_id`, `group_id`, valid_from, valid_to)
+- TimeSlot(`timeslot_id`, `schedule_id`, day_of_week, start_time, end_time)
+- Consumer(`consumer_id`, `address_id`, `group_id`, consumer_type)
+- OutageEvent(`event_id`, `group_id`, start_datetime, end_datetime, reason)
+- Notification(`notification_id`, `event_id`, message, created_at)
 
 ---
 
@@ -88,10 +88,14 @@ sql/
 ## 🧪 Тестування
 
 Для перевірки коректності створення схеми було виконано:
-- створення всіх типів і таблиць у PostgreSQL (Docker-контейнер),
+- створення всіх типів і таблиць у PostgreSQL (Docker-контейнер)
+
 ![alt text](images/tables_types.png)
-- додавання **не менше 3 тестових записів у кожну таблицю**,
+
+- додавання **не менше 3 тестових записів у кожну таблицю**
+
 ![alt text](images/selectfrom.png)
+
 - перевірка обмежень цілісності та зовнішніх ключів.
 
 Усі SQL-скрипти виконуються без помилок.
