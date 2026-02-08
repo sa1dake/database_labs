@@ -1,0 +1,31 @@
+{
+  "name": "database_labs",
+  "version": "1.0.0",
+  "description": "Цей репозиторій містить навчальний проєкт з проєктування та реалізації\r реляційної бази даних у межах курсу **“Вступ до баз даних”**.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sa1dake/database_labs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sa1dake/database_labs/issues"
+  },
+  "homepage": "https://github.com/sa1dake/database_labs#readme",
+  "devDependencies": {
+    "prisma": "^7.3.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.3.0",
+    "@types/node": "^25.2.2",
+    "pg": "^8.18.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
