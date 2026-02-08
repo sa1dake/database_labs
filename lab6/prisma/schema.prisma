@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model address {
+  address_id      Int         @id @default(autoincrement())
+  district_id     Int
+  group_id        Int
+  street          String
+  building_number String
+  district        district    @relation(fields: [district_id], references: [district_id], onDelete: NoAction, onUpdate: NoAction)
+  power_group     power_group @relation(fields: [group_id], references: [group_id], onDelete: NoAction, onUpdate: NoAction)
+  consumer        consumer[]
+}
+
+model consumer {
+  consumer_id   Int           @id @default(autoincrement())
+  address_id    Int
+  consumer_type consumer_type
+  address       address       @relation(fields: [address_id], references: [address_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model district {
+  district_id Int           @id @default(autoincrement())
+  region_id   Int
+  name        String
+  address     address[]
+  region      region        @relation(fields: [region_id], references: [region_id], onDelete: NoAction, onUpdate: NoAction)
+  power_group power_group[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model group_schedule_assignment {
+  assignment_id     Int               @id @default(autoincrement())
+  group_id          Int
+  template_id       Int
+  valid_from        DateTime          @db.Date
+  valid_to          DateTime?         @db.Date
+  power_group       power_group       @relation(fields: [group_id], references: [group_id], onDelete: NoAction, onUpdate: NoAction)
+  schedule_template schedule_template @relation(fields: [template_id], references: [template_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model notification {
+  notification_id Int          @id @default(autoincrement())
+  event_id        Int
+  message         String
+  created_at      DateTime     @default(now()) @db.Timestamp(6)
+  outage_event    outage_event @relation(fields: [event_id], references: [event_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model outage_event {
+  event_id       Int            @id @default(autoincrement())
+  group_id       Int
+  start_datetime DateTime       @db.Timestamp(6)
+  end_datetime   DateTime       @db.Timestamp(6)
+  reason         outage_reason
+  notification   notification[]
+  power_group    power_group    @relation(fields: [group_id], references: [group_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model power_group {
+  group_id                  Int                         @id @default(autoincrement())
+  district_id               Int
+  code                      String
+  address                   address[]
+  group_schedule_assignment group_schedule_assignment[]
+  outage_event              outage_event[]
+  district                  district                    @relation(fields: [district_id], references: [district_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model region {
+  region_id Int         @id @default(autoincrement())
+  name      String
+  type      region_type
+  district  district[]
+}
+
+model schedule_template {
+  template_id               Int                         @id @default(autoincrement())
+  name                      String
+  description               String?
+  group_schedule_assignment group_schedule_assignment[]
+  schedule_time_slot        schedule_time_slot[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model schedule_time_slot {
+  slot_id           Int               @id @default(autoincrement())
+  template_id       Int
+  day_of_week       Int
+  start_time        DateTime          @db.Time(6)
+  end_time          DateTime          @db.Time(6)
+  schedule_template schedule_template @relation(fields: [template_id], references: [template_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum consumer_type {
+  residential
+  business
+  critical
+}
+
+enum outage_reason {
+  scheduled
+  emergency
+  maintenance
+}
+
+enum region_type {
+  city
+  region
+}
